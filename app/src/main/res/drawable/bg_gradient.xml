@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Navy at top fading to olive-yellow at bottom, like the Figma design -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="270"
+        android:startColor="@color/navy_top"
+        android:centerColor="@color/navy_mid"
+        android:endColor="@color/olive_bottom"
+        android:centerY="0.45" />
+</shape>

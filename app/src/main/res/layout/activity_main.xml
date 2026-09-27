@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- HEADER: small logo (left), main logo (center), translate icon (right) -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp">
+
+                <!-- TODO: replace with your small logo -->
+                <ImageView
+                    android:id="@+id/imgLogoSmall"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="top|start"
+                    android:src="@drawable/small_logo"
+                    android:contentDescription="Small logo" />
+
+                <!-- TODO: replace with the LTO logo -->
+                <ImageView
+                    android:id="@+id/imgLogoMain"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:src="@drawable/lto_logo"
+                    android:contentDescription="LTO logo" />
+
+                <ImageView
+                    android:id="@+id/btnTranslate"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_gravity="top|end"
+                    android:background="@color/blue_accent"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_translate"
+                    app:tint="@color/white"
+                    android:contentDescription="Change language" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="serif"
+                android:text="DASHBOARD"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:text="Welcome Khristher"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
+            <!-- OVERALL SCORE CARD -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/cream"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="14dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="serif"
+                            android:text="OVERALL SCORE:"
+                            android:textColor="@color/text_dark"
+                            android:textSize="10sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvOverallScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="serif"
+                            android:text="83%"
+                            android:textColor="@color/text_dark"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.progressindicator.LinearProgressIndicator
+                            android:id="@+id/progressOverall"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:progress="83"
+                            app:indicatorColor="@color/blue_accent"
+                            app:trackColor="@color/track_grey"
+                            app:trackCornerRadius="4dp"
+                            app:trackThickness="5dp" />
+                    </LinearLayout>
+
+                    <!-- Donut chart -->
+                    <com.google.android.material.progressindicator.CircularProgressIndicator
+                        android:id="@+id/donutScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:progress="83"
+                        app:indicatorColor="@color/blue_accent"
+                        app:indicatorSize="60dp"
+                        app:trackColor="@color/orange_accent"
+                        app:trackThickness="10dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- MOCK EXAM COMPLETED CARD -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/cream"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:text="Mock Exam Completed"
+                        android:textColor="@color/text_dark"
+                        android:textSize="9sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progressMock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:progress="70"
+                        app:indicatorColor="@color/orange_accent"
+                        app:trackColor="@color/track_grey"
+                        app:trackCornerRadius="4dp"
+                        app:trackThickness="6dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- CATEGORY GRID (2 x 2) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardNonPro"
+                    style="@style/CategoryCard">
+                    <LinearLayout style="@style/CategoryInner">
+                        <!-- TODO: replace with Non-Professional icon -->
+                        <ImageView
+                            style="@style/CategoryIcon"
+                            android:contentDescription="Non-Professional"
+                            android:src="@drawable/ic_professional" />
+
+                        <TextView style="@style/CategoryLabel" android:text="Non-Professional" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPro"
+                    style="@style/CategoryCard">
+                    <LinearLayout style="@style/CategoryInner">
+                        <!-- TODO: replace with Professional icon -->
+                        <ImageView style="@style/CategoryIcon" android:src="@drawable/bg_placeholder" android:contentDescription="Professional" />
+                        <TextView style="@style/CategoryLabel" android:text="Professional" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardRoadSigns"
+                    style="@style/CategoryCard">
+                    <LinearLayout style="@style/CategoryInner">
+                        <!-- TODO: replace with Road Signs icon -->
+                        <ImageView style="@style/CategoryIcon" android:src="@drawable/ic_road_signs" android:contentDescription="Road Signs" />
+                        <TextView style="@style/CategoryLabel" android:text="Road Signs" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardFines"
+                    style="@style/CategoryCard">
+                    <LinearLayout style="@style/CategoryInner">
+                        <!-- TODO: replace with Fines and Penalties icon -->
+                        <ImageView style="@style/CategoryIcon" android:src="@drawable/bg_placeholder" android:contentDescription="Fines and Penalties" />
+                        <TextView style="@style/CategoryLabel" android:text="Fines And Penalties" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- BOTTOM NAV -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/cream"
+        app:itemIconTint="@color/blue_accent"
+        app:itemRippleColor="@android:color/transparent"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
