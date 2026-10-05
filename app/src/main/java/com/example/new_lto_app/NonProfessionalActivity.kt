@@ -21,7 +21,7 @@ class NonProfessionalActivity : AppCompatActivity() {
         }
 
         findViewById<android.widget.Button>(R.id.btnStartReview).setOnClickListener {
-            toast("Start Review") // TODO: launch your review materials Activity here
+            startActivity(Intent(this, ReviewActivity::class.java))
         }
 
         val nav = findViewById<BottomNavigationView>(R.id.bottomNav)

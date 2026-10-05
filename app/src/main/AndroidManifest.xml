@@ -22,6 +22,7 @@
         </activity>
         <activity android:name=".NonProfessionalActivity" />
         <activity android:name=".MockExamActivity" />
+        <activity android:name=".ReviewActivity" />
         <activity android:name=".ProfessionalActivity" />
 
     </application>

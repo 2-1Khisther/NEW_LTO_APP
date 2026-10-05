@@ -1,16 +1,17 @@
 package com.example.new_lto_app
 
-
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
-// Simple local model for one question. Later, replace SAMPLE_QUESTIONS
-// with questions pulled from Room (dao.getRandomQuestions(category, 45)).
+// Simple local model for one question.
+// Later, replace the sample lists below with questions pulled from Room
+// (dao.getRandomQuestions(category, 45)).
 data class ExamQuestion(
     val text: String,
     val optionA: String,
@@ -22,8 +23,28 @@ data class ExamQuestion(
 
 class MockExamActivity : AppCompatActivity() {
 
-    // TODO: replace this hardcoded list with real questions from your database
-    private val questions = listOf(
+    companion object {
+        const val EXTRA_CATEGORY = "extra_category"
+
+        // Category keys — use these exact strings everywhere (Home Page cards,
+        // the database "category" column, and anywhere else you filter by category).
+        const val CATEGORY_NON_PROFESSIONAL = "non_professional"
+        const val CATEGORY_PROFESSIONAL = "professional"
+        const val CATEGORY_ROAD_SIGNS = "road_signs"
+        const val CATEGORY_FINES_PENALTIES = "fines_penalties"
+
+        // Helper so other Activities can launch this screen with one line:
+        // startActivity(MockExamActivity.newIntent(this, MockExamActivity.CATEGORY_PROFESSIONAL))
+        fun newIntent(context: Context, category: String): Intent {
+            return Intent(context, MockExamActivity::class.java).apply {
+                putExtra(EXTRA_CATEGORY, category)
+            }
+        }
+    }
+
+    // TODO: replace these hardcoded lists with real questions from your database,
+    // filtered by category, e.g. dao.getRandomQuestions(category, 45)
+    private val nonProfessionalQuestions = listOf(
         ExamQuestion(
             "The minimum age in the application for Non-Professional Driver's License is:",
             "18 years old", "14 years old", "16 years old", "19 years old",
@@ -34,9 +55,29 @@ class MockExamActivity : AppCompatActivity() {
             "Slow down", "Stop", "Proceed with caution", "Speed up",
             correctAnswer = "B"
         )
-        // TODO: add the rest of your 45 questions, or load from the database
     )
 
+    private val professionalQuestions = listOf(
+        ExamQuestion(
+            "Is it legal to have an open exhaust on motorcycle or tricycles?",
+            "Yes, in areas requiring water and crossing unit",
+            "Yes, if the vehicle is experiencing low power",
+            "No, it cannot be legal",
+            "Not of the above",
+            correctAnswer = "C"
+        )
+        // TODO: add the rest of your Professional category questions
+    )
+
+    private val roadSignsQuestions = listOf<ExamQuestion>(
+        // TODO: add Road Signs questions
+    )
+
+    private val finesPenaltiesQuestions = listOf<ExamQuestion>(
+        // TODO: add Fines And Penalties questions
+    )
+
+    private lateinit var questions: List<ExamQuestion>
     private var currentIndex = 0
     private val userAnswers = mutableListOf<String?>() // stores "A"/"B"/"C"/"D"/null per question
 
@@ -52,6 +93,16 @@ class MockExamActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mock_exam)
+
+        // Figure out which category we're reviewing, default to Non-Professional
+        // if nothing was passed in (so the screen still works if you open it directly).
+        val category = intent.getStringExtra(EXTRA_CATEGORY) ?: CATEGORY_NON_PROFESSIONAL
+        questions = when (category) {
+            CATEGORY_PROFESSIONAL -> professionalQuestions
+            CATEGORY_ROAD_SIGNS -> roadSignsQuestions
+            CATEGORY_FINES_PENALTIES -> finesPenaltiesQuestions
+            else -> nonProfessionalQuestions
+        }
 
         tvQuestionNumber = findViewById(R.id.tvQuestionNumber)
         tvProgressCount = findViewById(R.id.tvProgressCount)
@@ -80,16 +131,6 @@ class MockExamActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.btnNextQuestion).setOnClickListener {
             saveCurrentAnswer()
             goToNextQuestion()
-        }
-
-        val nav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        nav.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_home -> { finish(); true }
-                R.id.nav_profile -> { toast("Profile"); true }
-                R.id.nav_settings -> { toast("Settings"); true }
-                else -> false
-            }
         }
     }
 

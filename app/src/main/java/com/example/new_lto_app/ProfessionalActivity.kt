@@ -17,11 +17,11 @@ class ProfessionalActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
         findViewById<android.widget.Button>(R.id.btnStartMockExam).setOnClickListener {
-            toast("Start Mock Exam") // TODO: launch your mock exam Activity here
+            startActivity(MockExamActivity.newIntent(this, MockExamActivity.CATEGORY_PROFESSIONAL))
         }
 
         findViewById<android.widget.Button>(R.id.btnStartReview).setOnClickListener {
-            toast("Start Review") // TODO: launch your review materials Activity here
+            startActivity(ReviewActivity.newIntent(this, ReviewActivity.CATEGORY_PROFESSIONAL))
         }
 
         val nav = findViewById<BottomNavigationView>(R.id.bottomNav)
