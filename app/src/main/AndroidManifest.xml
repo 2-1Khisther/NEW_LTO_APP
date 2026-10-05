@@ -21,6 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".NonProfessionalActivity" />
+        <activity android:name=".MockExamActivity" />
+        <activity android:name=".ProfessionalActivity" />
+
     </application>
 
 </manifest>

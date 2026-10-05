@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity() {
         findViewById<MaterialCardView>(R.id.cardNonPro).setOnClickListener {
             startActivity(Intent(this, NonProfessionalActivity::class.java))
         }
-        findViewById<MaterialCardView>(R.id.cardPro).setOnClickListener { toast("Professional") }
+        findViewById<MaterialCardView>(R.id.cardPro).setOnClickListener {
+            startActivity(Intent(this, ProfessionalActivity::class.java))
+        }
         findViewById<MaterialCardView>(R.id.cardRoadSigns).setOnClickListener { toast("Road Signs") }
         findViewById<MaterialCardView>(R.id.cardFines).setOnClickListener { toast("Fines And Penalties") }
 

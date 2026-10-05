@@ -1,23 +1,23 @@
 package com.example.new_lto_app
 
-import android.content.Intent
+
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class NonProfessionalActivity : AppCompatActivity() {
+class ProfessionalActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_non_professional)
+        setContentView(R.layout.activity_professional)
 
         // Back arrow closes this screen and returns to the Home Page
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
         findViewById<android.widget.Button>(R.id.btnStartMockExam).setOnClickListener {
-            startActivity(Intent(this, MockExamActivity::class.java))
+            toast("Start Mock Exam") // TODO: launch your mock exam Activity here
         }
 
         findViewById<android.widget.Button>(R.id.btnStartReview).setOnClickListener {
