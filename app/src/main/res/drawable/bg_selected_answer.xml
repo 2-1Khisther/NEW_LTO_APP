@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Light-blue highlighted box used to show the answer you picked, on the Review screen -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#C9D9EE" />
+    <corners android:radius="8dp" />
+</shape>
