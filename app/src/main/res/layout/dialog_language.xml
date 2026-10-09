@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <RadioGroup
+        android:id="@+id/radioGroupLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- English option -->
+        <RadioButton
+            android:id="@+id/radioEnglish"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:button="@null"
+            android:drawableStart="@drawable/radio_selector"
+            android:drawablePadding="14dp"
+            android:drawableTint="@color/navy_top"
+            android:fontFamily="serif"
+            android:gravity="center_vertical"
+            android:paddingStart="4dp"
+            android:text="English"
+            android:textColor="@color/text_dark"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <!-- TODO: add a UK/US flag icon here via android:drawableEnd if you want
+             the flag shown exactly like your Figma design. Put the flag image
+             in res/drawable/ first. -->
+
+        <!-- Filipino option -->
+        <RadioButton
+            android:id="@+id/radioFilipino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableStart="@drawable/radio_selector"
+            android:drawablePadding="14dp"
+            android:drawableTint="@color/navy_top"
+            android:fontFamily="serif"
+            android:gravity="center_vertical"
+            android:paddingStart="4dp"
+            android:text="Filipino"
+            android:textColor="@color/text_dark"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <!-- TODO: add a Philippine flag icon here the same way -->
+
+    </RadioGroup>
+</LinearLayout>

@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, FinesPenaltiesActivity::class.java))
         }
 
-        findViewById<ImageView>(R.id.btnTranslate).setOnClickListener { toast("Language picker") }
+        findViewById<ImageView>(R.id.btnTranslate).setOnClickListener { LanguageHelper.showPicker(this) }
 
         val nav = findViewById<BottomNavigationView>(R.id.bottomNav)
         BottomNavHelper.setup(this, nav, BottomNavHelper.Screen.HOME)

@@ -34,7 +34,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    dependencies {
+    dependencies{
         implementation(libs.androidx.core.ktx)
         implementation(libs.androidx.appcompat)
         implementation(libs.material)
@@ -44,5 +44,6 @@ android {
         androidTestImplementation(libs.androidx.junit)
         androidTestImplementation(libs.androidx.espresso.core)
         implementation("com.google.android.material:material:1.14.0")
+
     }
 }
