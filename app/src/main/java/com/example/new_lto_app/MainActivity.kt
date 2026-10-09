@@ -32,20 +32,17 @@ class MainActivity : AppCompatActivity() {
         findViewById<MaterialCardView>(R.id.cardPro).setOnClickListener {
             startActivity(Intent(this, ProfessionalActivity::class.java))
         }
-        findViewById<MaterialCardView>(R.id.cardRoadSigns).setOnClickListener { toast("Road Signs") }
-        findViewById<MaterialCardView>(R.id.cardFines).setOnClickListener { toast("Fines And Penalties") }
+        findViewById<MaterialCardView>(R.id.cardRoadSigns).setOnClickListener {
+            startActivity(Intent(this, RoadSignsActivity::class.java))
+        }
+        findViewById<MaterialCardView>(R.id.cardFines).setOnClickListener {
+            startActivity(Intent(this, FinesPenaltiesActivity::class.java))
+        }
 
         findViewById<ImageView>(R.id.btnTranslate).setOnClickListener { toast("Language picker") }
 
         val nav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        nav.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_home -> true
-                R.id.nav_profile -> { toast("Profile"); true }
-                R.id.nav_settings -> { toast("Settings"); true }
-                else -> false
-            }
-        }
+        BottomNavHelper.setup(this, nav, BottomNavHelper.Screen.HOME)
     }
 
     private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

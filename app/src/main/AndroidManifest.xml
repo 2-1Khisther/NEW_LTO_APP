@@ -24,6 +24,10 @@
         <activity android:name=".MockExamActivity" />
         <activity android:name=".ReviewActivity" />
         <activity android:name=".ProfessionalActivity" />
+        <activity android:name=".RoadSignsActivity" />
+        <activity android:name=".FinesPenaltiesActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".SettingsActivity" />
 
     </application>
 

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/navy_top"
+    tools:context=".ProfileActivity">
+
+    <!-- "Profile" title, top-left -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="serif"
+        android:text="Profile"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Light gray panel with rounded top corners, sits below the navy header -->
+    <View
+        android:id="@+id/grayPanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_panel_rounded_top"
+        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/avatarGuideline" />
+
+    <!-- Invisible guideline marking where the gray panel starts, so the avatar
+         can overlap the navy/gray boundary like in the design -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/avatarGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="150dp" />
+
+    <!-- TODO: replace with the user's real profile photo once login is built.
+         Put the image in res/drawable/ and change android:src below to
+         @drawable/your_file_name. Keep android:background="@drawable/bg_avatar_circle"
+         if you want the circular backdrop to remain visible behind a transparent photo. -->
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:background="@drawable/bg_avatar_circle"
+        android:padding="16dp"
+        android:src="@drawable/bg_placeholder"
+        android:contentDescription="Profile photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/avatarGuideline"
+        app:layout_constraintBottom_toBottomOf="@id/avatarGuideline" />
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:fontFamily="serif"
+        android:text="Khristher"
+        android:textColor="@color/text_dark"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgAvatar" />
+
+    <!-- 2x2 STATS GRID -->
+    <LinearLayout
+        android:id="@+id/statsRow1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="14dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUserName">
+
+        <com.google.android.material.card.MaterialCardView style="@style/StatCard">
+            <LinearLayout style="@style/StatCardInner">
+                <TextView style="@style/StatLabel" android:text="Question Answered" />
+                <TextView
+                    android:id="@+id/tvQuestionAnswered"
+                    style="@style/StatValue"
+                    android:text="0" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView style="@style/StatCard">
+            <LinearLayout style="@style/StatCardInner">
+                <TextView style="@style/StatLabel" android:text="Master Answer" />
+                <TextView
+                    android:id="@+id/tvMasterAnswer"
+                    style="@style/StatValue"
+                    android:text="0" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/statsRow2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="14dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/statsRow1">
+
+        <com.google.android.material.card.MaterialCardView style="@style/StatCard">
+            <LinearLayout style="@style/StatCardInner">
+                <TextView style="@style/StatLabel" android:text="Correct Answered" />
+                <TextView
+                    android:id="@+id/tvCorrectAnswered"
+                    style="@style/StatValue"
+                    android:text="0" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView style="@style/StatCard">
+            <LinearLayout style="@style/StatCardInner">
+                <TextView style="@style/StatLabel" android:text="Incorrect Answered" />
+                <TextView
+                    android:id="@+id/tvIncorrectAnswered"
+                    style="@style/StatValue"
+                    android:text="0" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <!-- BOTTOM NAV: same as other pages -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/cream"
+        app:itemIconTint="@color/blue_accent"
+        app:itemRippleColor="@android:color/transparent"
+        app:labelVisibilityMode="unlabeled"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

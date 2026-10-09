@@ -1,5 +1,6 @@
 package com.example.new_lto_app
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
@@ -17,22 +18,15 @@ class NonProfessionalActivity : AppCompatActivity() {
         findViewById<ImageView>(R.id.btnBack).setOnClickListener { finish() }
 
         findViewById<android.widget.Button>(R.id.btnStartMockExam).setOnClickListener {
-            startActivity(Intent(this, MockExamActivity::class.java))
+            startActivity(MockExamActivity.newIntent(this, MockExamActivity.CATEGORY_NON_PROFESSIONAL))
         }
 
         findViewById<android.widget.Button>(R.id.btnStartReview).setOnClickListener {
-            startActivity(Intent(this, ReviewActivity::class.java))
+            startActivity(ReviewActivity.newIntent(this, ReviewActivity.CATEGORY_NON_PROFESSIONAL))
         }
 
         val nav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        nav.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_home -> { finish(); true }
-                R.id.nav_profile -> { toast("Profile"); true }
-                R.id.nav_settings -> { toast("Settings"); true }
-                else -> false
-            }
-        }
+        BottomNavHelper.setup(this, nav, BottomNavHelper.Screen.NONE)
     }
 
     private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

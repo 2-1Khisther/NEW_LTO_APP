@@ -1,6 +1,6 @@
 package com.example.new_lto_app
 
-
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
@@ -25,14 +25,7 @@ class ProfessionalActivity : AppCompatActivity() {
         }
 
         val nav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        nav.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.nav_home -> { finish(); true }
-                R.id.nav_profile -> { toast("Profile"); true }
-                R.id.nav_settings -> { toast("Settings"); true }
-                else -> false
-            }
-        }
+        BottomNavHelper.setup(this, nav, BottomNavHelper.Screen.NONE)
     }
 
     private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
