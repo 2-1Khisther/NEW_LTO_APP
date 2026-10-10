@@ -28,6 +28,9 @@
         <activity android:name=".FinesPenaltiesActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".ExamResultsActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterActivity" />
 
     </application>
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
 // Simple local model for one question.
@@ -39,6 +38,14 @@ class MockExamActivity : AppCompatActivity() {
             return Intent(context, MockExamActivity::class.java).apply {
                 putExtra(EXTRA_CATEGORY, category)
             }
+        }
+
+        // Human-readable label shown on the Exam Results screen
+        private fun displayNameFor(category: String): String = when (category) {
+            CATEGORY_PROFESSIONAL -> "Professional"
+            CATEGORY_ROAD_SIGNS -> "Road Signs"
+            CATEGORY_FINES_PENALTIES -> "Fines And Penalties"
+            else -> "Non-Professional"
         }
     }
 
@@ -78,6 +85,7 @@ class MockExamActivity : AppCompatActivity() {
     )
 
     private lateinit var questions: List<ExamQuestion>
+    private lateinit var category: String
     private var currentIndex = 0
     private val userAnswers = mutableListOf<String?>() // stores "A"/"B"/"C"/"D"/null per question
 
@@ -96,7 +104,7 @@ class MockExamActivity : AppCompatActivity() {
 
         // Figure out which category we're reviewing, default to Non-Professional
         // if nothing was passed in (so the screen still works if you open it directly).
-        val category = intent.getStringExtra(EXTRA_CATEGORY) ?: CATEGORY_NON_PROFESSIONAL
+        category = intent.getStringExtra(EXTRA_CATEGORY) ?: CATEGORY_NON_PROFESSIONAL
         questions = when (category) {
             CATEGORY_PROFESSIONAL -> professionalQuestions
             CATEGORY_ROAD_SIGNS -> roadSignsQuestions
@@ -123,9 +131,8 @@ class MockExamActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.btnEndExam).setOnClickListener {
-            // TODO: navigate to your Exam Results screen instead of just a toast
-            toast("Exam ended")
-            finish()
+            saveCurrentAnswer() // don't lose whatever's selected on the current question
+            finishExam()
         }
 
         findViewById<TextView>(R.id.btnNextQuestion).setOnClickListener {
@@ -169,10 +176,37 @@ class MockExamActivity : AppCompatActivity() {
             currentIndex++
             showQuestion(currentIndex)
         } else {
-            // TODO: navigate to your Exam Results screen and pass userAnswers for grading
-            toast("That was the last question")
+            finishExam()
         }
     }
 
-    private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    // Grades whatever was answered so far and opens the Exam Results screen.
+    // Works the same whether the user finished every question or tapped End
+    // Exam partway through — anything still unanswered just counts as skipped.
+    private fun finishExam() {
+        var correct = 0
+        var incorrect = 0
+        var unanswered = 0
+
+        for (i in questions.indices) {
+            val userAnswer = userAnswers[i]
+            when {
+                userAnswer == null -> unanswered++
+                userAnswer == questions[i].correctAnswer -> correct++
+                else -> incorrect++
+            }
+        }
+
+        startActivity(
+            ExamResultsActivity.newIntent(
+                context = this,
+                categoryDisplayName = displayNameFor(category),
+                correct = correct,
+                incorrect = incorrect,
+                unanswered = unanswered,
+                total = questions.size
+            )
+        )
+        finish()
+    }
 }
