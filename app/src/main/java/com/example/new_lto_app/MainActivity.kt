@@ -15,7 +15,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // First launch: ask to log in or continue offline
+        if (!SessionManager(this).hasChosenMode()) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
         setContentView(R.layout.activity_main)
+
+        // Dynamic values (replace with real data later)
+
 
         // Dynamic values (replace with real data later)
         val score = 83

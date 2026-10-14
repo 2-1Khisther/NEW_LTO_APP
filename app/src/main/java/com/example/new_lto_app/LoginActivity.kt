@@ -1,6 +1,5 @@
 package com.example.new_lto_app
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
@@ -8,40 +7,61 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.new_lto_app.network.ApiClient
+import com.example.new_lto_app.network.ApiErrors
+import com.example.new_lto_app.network.LoginRequest
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
+
+    private lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        session = SessionManager(this)
 
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
+        val btnLogin = findViewById<TextView>(R.id.btnLogin)
+        val loginLabel = btnLogin.text
 
-        findViewById<TextView>(R.id.btnLogin).setOnClickListener {
+        btnLogin.setOnClickListener {
             val email = etEmail.text.toString().trim()
             val password = etPassword.text.toString()
-
             if (!validate(email, password)) return@setOnClickListener
 
-            // TODO: replace this with a real call to your backend API, e.g.
-            //   POST /login { email, password }
-            // On success: save the returned auth token (EncryptedSharedPreferences)
-            // and navigate to MainActivity. On failure: show the server's error
-            // message instead of this toast.
-            toast("Logging in...")
-            goToHome()
+            btnLogin.isEnabled = false
+            btnLogin.text = "Logging in..."
+
+            lifecycleScope.launch {
+                try {
+                    // POST /api/auth/login -> token + user details
+                    val auth = ApiClient.api.login(LoginRequest(email, password))
+                    session.saveLogin(auth)
+                    toast("Welcome, ${auth.user.fullName}!")
+                    goToHome()
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    toastLong(ApiErrors.message(e))
+                } finally {
+                    btnLogin.isEnabled = true
+                    btnLogin.text = loginLabel
+                }
+            }
         }
 
         findViewById<TextView>(R.id.btnContinueOffline).setOnClickListener {
-            // Lets the user use the app without an account, per your hybrid
-            // offline/online design — exam history just won't sync until they log in.
+            // Use the app without an account (hybrid design). Exams stay on the phone.
+            session.continueOffline()
             goToHome()
         }
 
         findViewById<TextView>(R.id.tvForgotPassword).setOnClickListener {
-            // TODO: build a Forgot Password screen/flow once the backend exists
-            toast("Forgot password")
+            toast("Forgot password is not available yet")
         }
 
         findViewById<TextView>(R.id.tvGoToRegister).setOnClickListener {
@@ -50,27 +70,19 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun validate(email: String, password: String): Boolean {
-        if (email.isEmpty()) {
-            toast("Please enter your email")
-            return false
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            toast("Please enter a valid email")
-            return false
-        }
-        if (password.isEmpty()) {
-            toast("Please enter your password")
-            return false
-        }
+        if (email.isEmpty()) { toast("Please enter your email"); return false }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) { toast("Please enter a valid email"); return false }
+        if (password.isEmpty()) { toast("Please enter your password"); return false }
         return true
     }
 
     private fun goToHome() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
         finish()
     }
 
     private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    private fun toastLong(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
 }
