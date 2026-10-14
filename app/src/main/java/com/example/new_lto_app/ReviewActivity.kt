@@ -16,31 +16,40 @@ class ReviewActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_CATEGORY = "extra_category"
+        const val EXTRA_VEHICLE_TYPE = "extra_vehicle_type"
 
         const val CATEGORY_NON_PROFESSIONAL = "non_professional"
         const val CATEGORY_PROFESSIONAL = "professional"
         const val CATEGORY_ROAD_SIGNS = "road_signs"
         const val CATEGORY_FINES_PENALTIES = "fines_penalties"
 
-        fun newIntent(context: Context, category: String): Intent {
+        fun newIntent(context: Context, category: String, vehicleType: String? = null): Intent {
             return Intent(context, ReviewActivity::class.java).apply {
                 putExtra(EXTRA_CATEGORY, category)
+                putExtra(EXTRA_VEHICLE_TYPE, vehicleType)
             }
         }
     }
 
-    private val nonProfessionalItems = listOf(
+    // TODO: add real Motorcycle content (Nonpro manual pp.162-167, Pro pp.173-177)
+    private val nonProfessionalMotorcycleItems = listOf<ReviewItem>()
+
+    // TODO: add the rest of the real Non-Professional items from the manual
+    private val nonProfessionalLightItems = listOf(
         ReviewItem(
-            "The minimum age in the application for Non-Professional Driver's License is:",
-            "18 years old"
+            "If you are parking uphill on a road without a curb, turn the wheels toward the:",
+            "Edge of the road"
         ),
         ReviewItem(
-            "What does a red traffic light mean?",
-            "Stop"
+            "What does a flashing yellow light mean?",
+            "You can proceed through the intersection with caution"
         )
     )
 
-    private val professionalItems = listOf(
+    private val professionalMotorcycleItems = listOf<ReviewItem>()
+
+    // TODO: add the rest of the real Professional items from the manual
+    private val professionalLightItems = listOf(
         ReviewItem(
             "Is it legal to have an open exhaust on motorcycle or tricycles?",
             "No, it cannot be legal"
@@ -63,11 +72,22 @@ class ReviewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_review)
 
         val category = intent.getStringExtra(EXTRA_CATEGORY) ?: CATEGORY_NON_PROFESSIONAL
+        val vehicleType = intent.getStringExtra(EXTRA_VEHICLE_TYPE)
+
         items = when (category) {
-            CATEGORY_PROFESSIONAL -> professionalItems
+            CATEGORY_PROFESSIONAL -> if (vehicleType == VehicleTypeHelper.MOTORCYCLE)
+                professionalMotorcycleItems else professionalLightItems
             CATEGORY_ROAD_SIGNS -> roadSignsItems
             CATEGORY_FINES_PENALTIES -> finesPenaltiesItems
-            else -> nonProfessionalItems
+            else -> if (vehicleType == VehicleTypeHelper.MOTORCYCLE)
+                nonProfessionalMotorcycleItems else nonProfessionalLightItems
+        }
+
+        // Guard: no content yet for this selection -> don't crash
+        if (items.isEmpty()) {
+            toast("No review material yet for this selection")
+            finish()
+            return
         }
 
         tvQuestionNumber = findViewById(R.id.tvQuestionNumber)
@@ -77,9 +97,7 @@ class ReviewActivity : AppCompatActivity() {
 
         showItem(currentIndex)
 
-        findViewById<TextView>(R.id.btnEnd).setOnClickListener {
-            finish()
-        }
+        findViewById<TextView>(R.id.btnEnd).setOnClickListener { finish() }
 
         findViewById<TextView>(R.id.btnNextQuestion).setOnClickListener {
             if (currentIndex < items.size - 1) {

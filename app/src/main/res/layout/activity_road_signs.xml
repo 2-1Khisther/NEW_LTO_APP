@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="serif"
                         android:gravity="end"
-                        android:text="1 of 45"
+                        android:text="1 of 60"
                         android:textColor="@color/text_dark"
                         android:textSize="9sp" />
 

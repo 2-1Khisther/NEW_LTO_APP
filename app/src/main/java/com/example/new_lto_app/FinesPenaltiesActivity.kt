@@ -6,13 +6,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
-// One violation entry: name + fine amount + what it means.
+// One violation entry: name + fine tiers (one per offense) + what it means.
 // TODO: replace this hardcoded list with real fines/penalties from your database,
 // and swap the drawable res for each item's actual icon (e.g. a ticket icon).
 data class Violation(
     val imageRes: Int,
     val name: String,
-    val fineAmount: String,
+    val fineTiers: List<String>,
     val description: String
 )
 
@@ -25,19 +25,19 @@ class FinesPenaltiesActivity : AppCompatActivity() {
         Violation(
             imageRes = R.drawable.bg_placeholder, // TODO: replace with a ticket/violation icon
             name = "Driving Without a License",
-            fineAmount = "₱3,000 (1st offense)",
+            fineTiers = listOf("₱3,000 (1st offense)"),
             description = "Operating a motor vehicle on a public road without a valid driver's license issued by the LTO."
         ),
         Violation(
             imageRes = R.drawable.bg_placeholder,
             name = "No Seatbelt",
-            fineAmount = "₱1,000 (1st offense)",
+            fineTiers = listOf("₱1,000 (1st offense)"),
             description = "Failure of the driver or front-seat passenger to wear a seatbelt while the vehicle is in motion."
         ),
         Violation(
             imageRes = R.drawable.bg_placeholder,
             name = "Reckless Driving",
-            fineAmount = "₱2,000 (1st offense)",
+            fineTiers = listOf("₱2,000 (1st offense)"),
             description = "Driving in a manner that endangers the safety of other drivers, pedestrians, or property."
         )
     )
@@ -81,7 +81,8 @@ class FinesPenaltiesActivity : AppCompatActivity() {
         tvProgressCount.text = "${index + 1} of ${violations.size}"
         imgViolationIcon.setImageResource(v.imageRes)
         tvViolationName.text = v.name
-        tvFineAmount.text = v.fineAmount
+        // Each tier on its own line, e.g. 1st / 2nd / 3rd offense
+        tvFineAmount.text = v.fineTiers.joinToString("\n")
         tvViolationDescription.text = v.description
     }
 

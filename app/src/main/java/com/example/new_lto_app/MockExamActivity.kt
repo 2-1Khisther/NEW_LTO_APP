@@ -6,65 +6,73 @@ import android.os.Bundle
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import java.io.Serializable
 
-// Simple local model for one question.
-// Later, replace the sample lists below with questions pulled from Room
-// (dao.getRandomQuestions(category, 45)).
+// Serializable so a finished exam can be passed to the Results and Review screens
 data class ExamQuestion(
     val text: String,
     val optionA: String,
     val optionB: String,
     val optionC: String,
     val optionD: String,
-    val correctAnswer: String // "A", "B", "C", or "D"
-)
+    val correctAnswer: String
+) : Serializable
 
 class MockExamActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_CATEGORY = "extra_category"
+        const val EXTRA_VEHICLE_TYPE = "extra_vehicle_type" // NEW
 
-        // Category keys — use these exact strings everywhere (Home Page cards,
-        // the database "category" column, and anywhere else you filter by category).
         const val CATEGORY_NON_PROFESSIONAL = "non_professional"
         const val CATEGORY_PROFESSIONAL = "professional"
         const val CATEGORY_ROAD_SIGNS = "road_signs"
         const val CATEGORY_FINES_PENALTIES = "fines_penalties"
 
-        // Helper so other Activities can launch this screen with one line:
-        // startActivity(MockExamActivity.newIntent(this, MockExamActivity.CATEGORY_PROFESSIONAL))
-        fun newIntent(context: Context, category: String): Intent {
+        // LTO manual exam format: 60 items per exam
+        const val EXAM_ITEM_COUNT = 60
+
+        // NEW: vehicleType is now required for Non-Professional/Professional.
+        // Pass null for Road Signs/Fines, which don't have this distinction.
+        fun newIntent(context: Context, category: String, vehicleType: String? = null): Intent {
             return Intent(context, MockExamActivity::class.java).apply {
                 putExtra(EXTRA_CATEGORY, category)
+                putExtra(EXTRA_VEHICLE_TYPE, vehicleType)
             }
         }
 
-        // Human-readable label shown on the Exam Results screen
-        private fun displayNameFor(category: String): String = when (category) {
-            CATEGORY_PROFESSIONAL -> "Professional"
-            CATEGORY_ROAD_SIGNS -> "Road Signs"
-            CATEGORY_FINES_PENALTIES -> "Fines And Penalties"
-            else -> "Non-Professional"
+        private fun displayNameFor(category: String, vehicleType: String?): String {
+            val categoryName = when (category) {
+                CATEGORY_PROFESSIONAL -> "Professional"
+                CATEGORY_ROAD_SIGNS -> "Road Signs"
+                CATEGORY_FINES_PENALTIES -> "Fines And Penalties"
+                else -> "Non-Professional"
+            }
+            val vehicleLabel = when (vehicleType) {
+                VehicleTypeHelper.MOTORCYCLE -> " (Motorcycle)"
+                VehicleTypeHelper.LIGHT -> " (Light Vehicle)"
+                else -> ""
+            }
+            return categoryName + vehicleLabel
         }
     }
 
-    // TODO: replace these hardcoded lists with real questions from your database,
-    // filtered by category, e.g. dao.getRandomQuestions(category, 45)
-    private val nonProfessionalQuestions = listOf(
+    // NEW: question lists now split by vehicle type — doubled from 2 lists to 4
+    private val nonProfessionalMotorcycleQuestions = listOf<ExamQuestion>()
+
+    private val nonProfessionalLightQuestions = listOf(
         ExamQuestion(
             "The minimum age in the application for Non-Professional Driver's License is:",
             "18 years old", "14 years old", "16 years old", "19 years old",
             correctAnswer = "A"
-        ),
-        ExamQuestion(
-            "What does a red traffic light mean?",
-            "Slow down", "Stop", "Proceed with caution", "Speed up",
-            correctAnswer = "B"
         )
     )
 
-    private val professionalQuestions = listOf(
+    private val professionalMotorcycleQuestions = listOf<ExamQuestion>()
+
+    private val professionalLightQuestions = listOf(
         ExamQuestion(
             "Is it legal to have an open exhaust on motorcycle or tricycles?",
             "Yes, in areas requiring water and crossing unit",
@@ -73,21 +81,16 @@ class MockExamActivity : AppCompatActivity() {
             "Not of the above",
             correctAnswer = "C"
         )
-        // TODO: add the rest of your Professional category questions
     )
 
-    private val roadSignsQuestions = listOf<ExamQuestion>(
-        // TODO: add Road Signs questions
-    )
-
-    private val finesPenaltiesQuestions = listOf<ExamQuestion>(
-        // TODO: add Fines And Penalties questions
-    )
+    private val roadSignsQuestions = listOf<ExamQuestion>()
+    private val finesPenaltiesQuestions = listOf<ExamQuestion>()
 
     private lateinit var questions: List<ExamQuestion>
     private lateinit var category: String
+    private var vehicleType: String? = null
     private var currentIndex = 0
-    private val userAnswers = mutableListOf<String?>() // stores "A"/"B"/"C"/"D"/null per question
+    private val userAnswers = mutableListOf<String?>()
 
     private lateinit var tvQuestionNumber: TextView
     private lateinit var tvProgressCount: TextView
@@ -102,14 +105,26 @@ class MockExamActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mock_exam)
 
-        // Figure out which category we're reviewing, default to Non-Professional
-        // if nothing was passed in (so the screen still works if you open it directly).
         category = intent.getStringExtra(EXTRA_CATEGORY) ?: CATEGORY_NON_PROFESSIONAL
-        questions = when (category) {
-            CATEGORY_PROFESSIONAL -> professionalQuestions
+        vehicleType = intent.getStringExtra(EXTRA_VEHICLE_TYPE)
+
+        // NEW: now branches on BOTH category AND vehicleType
+        val questionPool = when (category) {
+            CATEGORY_PROFESSIONAL -> if (vehicleType == VehicleTypeHelper.MOTORCYCLE)
+                professionalMotorcycleQuestions else professionalLightQuestions
             CATEGORY_ROAD_SIGNS -> roadSignsQuestions
             CATEGORY_FINES_PENALTIES -> finesPenaltiesQuestions
-            else -> nonProfessionalQuestions
+            else -> if (vehicleType == VehicleTypeHelper.MOTORCYCLE)
+                nonProfessionalMotorcycleQuestions else nonProfessionalLightQuestions
+        }
+
+        // Draw a random set of up to 60 items from the pool, like the real exam
+        questions = questionPool.shuffled().take(EXAM_ITEM_COUNT)
+
+        if (questions.isEmpty()) {
+            Toast.makeText(this, "No questions yet for this selection", Toast.LENGTH_LONG).show()
+            finish()
+            return
         }
 
         tvQuestionNumber = findViewById(R.id.tvQuestionNumber)
@@ -121,17 +136,13 @@ class MockExamActivity : AppCompatActivity() {
         optionC = findViewById(R.id.optionC)
         optionD = findViewById(R.id.optionD)
 
-        // Pre-fill the answers list with "not answered yet"
         repeat(questions.size) { userAnswers.add(null) }
-
         showQuestion(currentIndex)
 
-        findViewById<TextView>(R.id.btnSkip).setOnClickListener {
-            goToNextQuestion() // skip = move on without requiring an answer
-        }
+        findViewById<TextView>(R.id.btnSkip).setOnClickListener { goToNextQuestion() }
 
         findViewById<TextView>(R.id.btnEndExam).setOnClickListener {
-            saveCurrentAnswer() // don't lose whatever's selected on the current question
+            saveCurrentAnswer()
             finishExam()
         }
 
@@ -151,7 +162,6 @@ class MockExamActivity : AppCompatActivity() {
         optionC.text = "C.  ${q.optionC}"
         optionD.text = "D.  ${q.optionD}"
 
-        // Restore a previously picked answer if the user goes back/forward later
         radioGroup.clearCheck()
         when (userAnswers[index]) {
             "A" -> optionA.isChecked = true
@@ -180,9 +190,6 @@ class MockExamActivity : AppCompatActivity() {
         }
     }
 
-    // Grades whatever was answered so far and opens the Exam Results screen.
-    // Works the same whether the user finished every question or tapped End
-    // Exam partway through — anything still unanswered just counts as skipped.
     private fun finishExam() {
         var correct = 0
         var incorrect = 0
@@ -200,11 +207,13 @@ class MockExamActivity : AppCompatActivity() {
         startActivity(
             ExamResultsActivity.newIntent(
                 context = this,
-                categoryDisplayName = displayNameFor(category),
+                categoryDisplayName = displayNameFor(category, vehicleType), // NEW: includes vehicle type
                 correct = correct,
                 incorrect = incorrect,
                 unanswered = unanswered,
-                total = questions.size
+                total = questions.size,
+                questions = ArrayList(questions),
+                userAnswers = ArrayList(userAnswers)
             )
         )
         finish()

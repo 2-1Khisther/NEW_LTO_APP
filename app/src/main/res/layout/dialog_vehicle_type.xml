@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:fontFamily="serif"
+        android:text="Choose vehicle type"
+        android:textColor="@color/text_dark"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupVehicleType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/radioMotorcycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:button="@null"
+            android:drawableStart="@drawable/radio_selector"
+            android:drawablePadding="14dp"
+            android:drawableTint="@color/navy_top"
+            android:fontFamily="serif"
+            android:gravity="center_vertical"
+            android:paddingStart="4dp"
+            android:text="Motorcycle / Tricycle (A, A1)"
+            android:textColor="@color/text_dark"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioLightVehicle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableStart="@drawable/radio_selector"
+            android:drawablePadding="14dp"
+            android:drawableTint="@color/navy_top"
+            android:fontFamily="serif"
+            android:gravity="center_vertical"
+            android:paddingStart="4dp"
+            android:text="Light Vehicle (B, B1, B2)"
+            android:textColor="@color/text_dark"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </RadioGroup>
+</LinearLayout>

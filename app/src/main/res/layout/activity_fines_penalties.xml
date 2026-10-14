@@ -88,7 +88,7 @@
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
-                    <!-- Fine amount, highlighted like the Review screen's answer box -->
+                    <!-- Fine tiers, one per line, highlighted like the Review screen's answer box -->
                     <TextView
                         android:id="@+id/tvFineAmount"
                         android:layout_width="match_parent"
@@ -97,6 +97,7 @@
                         android:background="@drawable/bg_selected_answer"
                         android:fontFamily="serif"
                         android:gravity="center"
+                        android:lineSpacingExtra="6dp"
                         android:paddingStart="14dp"
                         android:paddingTop="10dp"
                         android:paddingEnd="14dp"

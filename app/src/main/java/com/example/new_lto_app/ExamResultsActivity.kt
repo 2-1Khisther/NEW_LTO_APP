@@ -16,10 +16,10 @@ class ExamResultsActivity : AppCompatActivity() {
         private const val EXTRA_INCORRECT = "extra_incorrect"
         private const val EXTRA_UNANSWERED = "extra_unanswered"
         private const val EXTRA_TOTAL = "extra_total"
+        private const val EXTRA_QUESTIONS = "extra_questions"
+        private const val EXTRA_USER_ANSWERS = "extra_user_answers"
 
-        // The minimum score percentage needed to pass.
-        // TODO: adjust if the real LTO passing requirement is different
-        // (and consider making this different per category if needed).
+        // LTO manual passing requirement: 80% (48 out of 60 items).
         private const val PASSING_PERCENT = 80
 
         fun newIntent(
@@ -28,7 +28,9 @@ class ExamResultsActivity : AppCompatActivity() {
             correct: Int,
             incorrect: Int,
             unanswered: Int,
-            total: Int
+            total: Int,
+            questions: ArrayList<ExamQuestion>,
+            userAnswers: ArrayList<String?>
         ): Intent {
             return Intent(context, ExamResultsActivity::class.java).apply {
                 putExtra(EXTRA_CATEGORY, categoryDisplayName)
@@ -36,6 +38,8 @@ class ExamResultsActivity : AppCompatActivity() {
                 putExtra(EXTRA_INCORRECT, incorrect)
                 putExtra(EXTRA_UNANSWERED, unanswered)
                 putExtra(EXTRA_TOTAL, total)
+                putExtra(EXTRA_QUESTIONS, questions)
+                putExtra(EXTRA_USER_ANSWERS, userAnswers)
             }
         }
     }
@@ -51,7 +55,9 @@ class ExamResultsActivity : AppCompatActivity() {
         val total = intent.getIntExtra(EXTRA_TOTAL, 1).coerceAtLeast(1) // avoid divide-by-zero
 
         val percent = (correct * 100) / total
-        val passed = percent >= PASSING_PERCENT
+        // Minimum correct answers needed, rounded up (48 for a 60-item exam)
+        val passingScore = (total * PASSING_PERCENT + 99) / 100
+        val passed = correct >= passingScore
 
         findViewById<TextView>(R.id.tvCategoryName).text = categoryName
         findViewById<TextView>(R.id.tvScorePercent).text = "$percent%"
@@ -72,11 +78,14 @@ class ExamResultsActivity : AppCompatActivity() {
         // TODO: once Room is wired up, save this result here, e.g.
         // examResultDao.insert(ExamResult(category, correct, incorrect, unanswered, total, timestamp))
 
+        // Walk through this attempt's answers; Results stays open underneath,
+        // so finishing the review comes back here.
         findViewById<TextView>(R.id.btnReviewAnswers).setOnClickListener {
-            // TODO: launch ReviewActivity pre-filled with this attempt's actual
-            // answers once MockExamActivity passes them along, instead of the
-            // generic category review content it shows today.
-            finish()
+            @Suppress("DEPRECATION", "UNCHECKED_CAST") // getSerializableExtra(name, Class) needs API 33
+            val questions = intent.getSerializableExtra(EXTRA_QUESTIONS) as? ArrayList<ExamQuestion> ?: arrayListOf()
+            @Suppress("DEPRECATION", "UNCHECKED_CAST")
+            val userAnswers = intent.getSerializableExtra(EXTRA_USER_ANSWERS) as? ArrayList<String?> ?: arrayListOf()
+            startActivity(ExamReviewActivity.newIntent(this, questions, userAnswers))
         }
 
         findViewById<TextView>(R.id.btnBackToHome).setOnClickListener {
