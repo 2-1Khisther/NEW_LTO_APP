@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.material.progressindicator.CircularProgressIndicator
 
 class ExamResultsActivity : AppCompatActivity() {
@@ -61,17 +62,21 @@ class ExamResultsActivity : AppCompatActivity() {
 
         findViewById<TextView>(R.id.tvCategoryName).text = categoryName
         findViewById<TextView>(R.id.tvScorePercent).text = "$percent%"
-        findViewById<CircularProgressIndicator>(R.id.scoreProgress).progress = percent
+        val scoreRing = findViewById<CircularProgressIndicator>(R.id.scoreProgress)
+        scoreRing.progress = percent
+        scoreRing.setIndicatorColor(
+            ContextCompat.getColor(this, if (passed) R.color.go_green else R.color.stop_red)
+        )
         findViewById<TextView>(R.id.tvCorrectCount).text = correct.toString()
         findViewById<TextView>(R.id.tvIncorrectCount).text = incorrect.toString()
         findViewById<TextView>(R.id.tvUnansweredCount).text = unanswered.toString()
 
         val tvPassFail = findViewById<TextView>(R.id.tvPassFail)
         if (passed) {
-            tvPassFail.text = "PASSED"
+            tvPassFail.text = "Passed"
             tvPassFail.setBackgroundResource(R.drawable.bg_pass_badge)
         } else {
-            tvPassFail.text = "FAILED"
+            tvPassFail.text = "Failed"
             tvPassFail.setBackgroundResource(R.drawable.bg_fail_badge)
         }
 

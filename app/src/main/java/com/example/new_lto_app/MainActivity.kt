@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.progressindicator.CircularProgressIndicator
-import com.google.android.material.progressindicator.LinearProgressIndicator
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,17 +21,24 @@ class MainActivity : AppCompatActivity() {
             return
         }
         setContentView(R.layout.activity_main)
+        // Gradient runs under the status bar; the bottom nav pads itself
+        InsetsHelper.padForSystemBars(findViewById(R.id.scrollDashboard), top = true)
 
-        // Dynamic values (replace with real data later)
-
+        // Greet by first name; offline users have no name
+        val firstName = SessionManager(this).fullName?.trim()?.substringBefore(' ')
+        findViewById<TextView>(R.id.tvWelcome).text =
+            if (firstName.isNullOrEmpty()) "Hi there" else "Hi, $firstName"
 
         // Dynamic values (replace with real data later)
         val score = 83
         val mockCompleted = 70
         findViewById<TextView>(R.id.tvOverallScore).text = "$score%"
-        findViewById<LinearProgressIndicator>(R.id.progressOverall).progress = score
         findViewById<CircularProgressIndicator>(R.id.donutScore).progress = score
-        findViewById<LinearProgressIndicator>(R.id.progressMock).progress = mockCompleted
+        findViewById<TextView>(R.id.tvMockCompleted).text = "$mockCompleted%"
+        findViewById<LaneProgressView>(R.id.laneMock).apply {
+            setProgress(mockCompleted, 100)
+            contentDescription = "Mock exams completed: $mockCompleted%"
+        }
 
         // Category cards (hook these up to your next screens later)
         findViewById<MaterialCardView>(R.id.cardNonPro).setOnClickListener {

@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient"
+    android:fitsSystemWindows="true"
     tools:context=".LoginActivity">
 
     <ScrollView
@@ -22,48 +23,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:minHeight="600dp"
             android:orientation="vertical"
-            android:padding="28dp">
+            android:paddingStart="24dp"
+            android:paddingTop="32dp"
+            android:paddingEnd="24dp"
+            android:paddingBottom="24dp">
 
-            <!-- TODO: replace with the LTO logo -->
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imgLogoMain"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/bg_placeholder"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Lto.Circle"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/lto_logo"
                 android:contentDescription="LTO logo" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="12dp"
-                android:fontFamily="serif"
-                android:text="LOGIN"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="24dp"
+                android:text="Welcome back"
+                android:textAppearance="@style/TextAppearance.Lto.Title.OnNavy"
+                android:textSize="30sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="2dp"
-                android:fontFamily="serif"
-                android:text="Sign in to continue your review"
-                android:textColor="@color/white"
-                android:textSize="9sp" />
+                android:layout_marginTop="4dp"
+                android:text="Log in to pick up your review where you left off."
+                android:textAppearance="@style/TextAppearance.Lto.Body.OnNavy" />
 
             <!-- LOGIN CARD -->
             <com.google.android.material.card.MaterialCardView
+                style="@style/Widget.Lto.Card.Hero"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:cardBackgroundColor="@color/cream"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="2dp">
+                android:layout_marginTop="28dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -71,50 +66,63 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                    <EditText
-                        android:id="@+id/etEmail"
-                        style="@style/AuthInput"
-                        android:layout_marginTop="0dp"
-                        android:hint="Email"
-                        android:inputType="textEmailAddress"
-                        android:maxLines="1" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email">
 
-                    <EditText
-                        android:id="@+id/etPassword"
-                        style="@style/AuthInput"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEmail"
+                            style="@style/Widget.Lto.TextInput.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="emailAddress"
+                            android:inputType="textEmailAddress"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
                         android:hint="Password"
-                        android:inputType="textPassword"
-                        android:maxLines="1" />
+                        app:endIconMode="password_toggle">
 
-                    <TextView
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etPassword"
+                            style="@style/Widget.Lto.TextInput.EditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="password"
+                            android:inputType="textPassword"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/tvForgotPassword"
+                        style="@style/Widget.Lto.Button.Text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="serif"
-                        android:text="Forgot Password?"
-                        android:textColor="@color/blue_accent"
-                        android:textSize="8sp" />
+                        android:layout_marginTop="4dp"
+                        android:text="Forgot password?"
+                        android:textSize="14sp" />
 
-                    <TextView
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnLogin"
-                        style="@style/AuthButton"
-                        android:text="LOGIN" />
-
-                    <!-- Offline mode: lets the user skip login and use the app
-                         without an account, per your hybrid offline/online design -->
-                    <TextView
-                        android:id="@+id/btnContinueOffline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="serif"
-                        android:gravity="center"
-                        android:padding="10dp"
-                        android:text="Continue Offline"
-                        android:textColor="@color/text_dark"
-                        android:textSize="9sp" />
+                        android:layout_marginTop="8dp"
+                        android:text="Log in" />
+
+                    <!-- Offline mode: use the app without an account (hybrid design) -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnContinueOffline"
+                        style="@style/Widget.Lto.Button.Text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Continue offline" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -123,26 +131,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="serif"
-                    android:text="Don't have an account? "
-                    android:textColor="@color/white"
-                    android:textSize="9sp" />
+                    android:text="New here?"
+                    android:textAppearance="@style/TextAppearance.Lto.Body.OnNavy" />
 
-                <TextView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/tvGoToRegister"
+                    style="@style/Widget.Lto.Button.Text.OnNavy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="serif"
-                    android:text="Register"
-                    android:textColor="@color/white"
-                    android:textSize="9sp"
-                    android:textStyle="bold" />
+                    android:text="Create an account" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

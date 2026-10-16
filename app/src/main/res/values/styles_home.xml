@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CategoryCard">
+    <!-- Dashboard category tile: icon top-left, label bottom-left -->
+    <style name="CategoryTile" parent="Widget.Lto.Card.Tile">
         <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">120dp</item>
+        <item name="android:layout_height">132dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_margin">10dp</item>
-        <item name="cardBackgroundColor">@color/cream</item>
-        <item name="cardCornerRadius">14dp</item>
-        <item name="cardElevation">3dp</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
     </style>
     <style name="CategoryInner">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:gravity">center</item>
-        <item name="android:padding">8dp</item>
+        <item name="android:padding">16dp</item>
     </style>
+    <!-- Decorative: the label below names the tile -->
     <style name="CategoryIcon">
-        <item name="android:layout_width">60dp</item>
-        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/bg_icon_tile</item>
+        <item name="android:padding">12dp</item>
+        <item name="tint">@color/navy_900</item>
+        <item name="android:importantForAccessibility">no</item>
     </style>
     <style name="CategoryLabel">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">6dp</item>
-        <item name="android:fontFamily">serif</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/text_dark</item>
-        <item name="android:textSize">9sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">bottom|start</item>
+        <item name="android:textAppearance">@style/TextAppearance.Lto.Heading</item>
+        <item name="android:textColor">@color/navy_900</item>
+        <item name="android:textSize">16sp</item>
+        <!-- Break "Non-professional" at its hyphen, never mid-word -->
+        <item name="android:hyphenationFrequency">none</item>
+        <item name="android:breakStrategy">simple</item>
     </style>
 </resources>

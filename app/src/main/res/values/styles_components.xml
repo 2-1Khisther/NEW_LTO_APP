@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shared component styles. Hierarchy comes from radius and color, not shadow:
+     hero cards 24dp, tiles 20dp, options 16dp, buttons and inputs 14dp. -->
+<resources>
+
+    <!-- Buttons: 56dp tall, sentence case -->
+    <style name="Widget.Lto.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/olive_400</item>
+        <item name="android:textColor">@color/navy_900</item>
+        <item name="rippleColor">@color/navy_700</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Lto.Button</item>
+        <item name="iconTint">@color/navy_900</item>
+    </style>
+
+    <style name="Widget.Lto.Button.Secondary" parent="Widget.Lto.Button.Primary">
+        <item name="backgroundTint">@color/navy_900</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="rippleColor">@color/navy_700</item>
+        <item name="iconTint">@color/white</item>
+    </style>
+
+    <!-- Low-emphasis action on cream (Skip, Continue offline) -->
+    <style name="Widget.Lto.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/navy_900</item>
+        <item name="rippleColor">@color/cream_200</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Lto.Button</item>
+        <item name="iconTint">@color/navy_900</item>
+    </style>
+
+    <!-- Low-emphasis action sitting on the navy gradient -->
+    <style name="Widget.Lto.Button.Text.OnNavy">
+        <item name="android:textColor">@color/white</item>
+        <item name="rippleColor">@color/navy_700</item>
+        <item name="iconTint">@color/white</item>
+    </style>
+
+    <!-- 48dp round icon button on the gradient (translate, close) -->
+    <style name="Widget.Lto.IconButton.OnNavy" parent="Widget.Material3.Button.IconButton">
+        <item name="iconTint">@color/white</item>
+        <item name="iconSize">24dp</item>
+        <item name="rippleColor">@color/navy_700</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <!-- Circular clip for the LTO seal (the PNG has white corners) -->
+    <style name="ShapeAppearance.Lto.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Cards -->
+    <style name="Widget.Lto.Card.Hero" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/cream_50</item>
+        <item name="cardCornerRadius">24dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <style name="Widget.Lto.Card.Tile" parent="Widget.Lto.Card.Hero">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="rippleColor">@color/cream_200</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <!-- Text fields: cream_200 fill, no outline until focused -->
+    <style name="Widget.Lto.TextInput" parent="Widget.Material3.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/cream_200</item>
+        <item name="boxStrokeWidth">0dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxStrokeColor">@color/navy_900</item>
+        <item name="boxCornerRadiusTopStart">14dp</item>
+        <item name="boxCornerRadiusTopEnd">14dp</item>
+        <item name="boxCornerRadiusBottomStart">14dp</item>
+        <item name="boxCornerRadiusBottomEnd">14dp</item>
+        <item name="hintTextColor">@color/navy_900</item>
+        <item name="android:textColorHint">@color/ink_muted</item>
+        <item name="endIconTint">@color/ink_muted</item>
+        <item name="hintTextAppearance">@style/TextAppearance.Lto.Caption</item>
+    </style>
+
+    <style name="Widget.Lto.TextInput.EditText" parent="Widget.Material3.TextInputEditText.FilledBox">
+        <item name="android:textAppearance">@style/TextAppearance.Lto.Body</item>
+        <item name="android:textColor">@color/ink</item>
+    </style>
+
+    <!-- Bottom nav: cream bar, olive pill behind the active tab, labels on -->
+    <style name="Widget.Lto.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/cream_50</item>
+        <item name="itemIconTint">@color/navy_900</item>
+        <item name="itemTextColor">@color/navy_900</item>
+        <item name="itemActiveIndicatorStyle">@style/Widget.Lto.BottomNav.Indicator</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.Lto.Label</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.Lto.Caption</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="itemRippleColor">@color/cream_200</item>
+    </style>
+
+    <style name="Widget.Lto.BottomNav.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/olive_400</item>
+    </style>
+
+    <!-- Score rings: navy on a cream track, rounded ends -->
+    <style name="Widget.Lto.ProgressRing" parent="Widget.Material3.CircularProgressIndicator">
+        <item name="indicatorColor">@color/navy_900</item>
+        <item name="trackColor">@color/cream_200</item>
+        <item name="trackCornerRadius">8dp</item>
+    </style>
+
+    <!-- One exam answer: navy pill, white 16sp text, olive outline when picked -->
+    <style name="Widget.Lto.ExamOption" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:minHeight">56dp</item>
+        <item name="android:background">@drawable/bg_option_navy</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawableEnd">@drawable/radio_selector</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.Lto.Body</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>

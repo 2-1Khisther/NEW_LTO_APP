@@ -100,10 +100,14 @@ class MockExamActivity : AppCompatActivity() {
     private lateinit var optionB: RadioButton
     private lateinit var optionC: RadioButton
     private lateinit var optionD: RadioButton
+    private lateinit var laneExam: LaneProgressView
+    private lateinit var btnNextQuestion: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mock_exam)
+        InsetsHelper.padForSystemBars(findViewById(R.id.topBar), top = true)
+        InsetsHelper.padForSystemBars(findViewById(R.id.actionBar), bottom = true)
 
         category = intent.getStringExtra(EXTRA_CATEGORY) ?: CATEGORY_NON_PROFESSIONAL
         vehicleType = intent.getStringExtra(EXTRA_VEHICLE_TYPE)
@@ -135,6 +139,8 @@ class MockExamActivity : AppCompatActivity() {
         optionB = findViewById(R.id.optionB)
         optionC = findViewById(R.id.optionC)
         optionD = findViewById(R.id.optionD)
+        laneExam = findViewById(R.id.laneExam)
+        btnNextQuestion = findViewById(R.id.btnNextQuestion)
 
         repeat(questions.size) { userAnswers.add(null) }
         showQuestion(currentIndex)
@@ -146,7 +152,7 @@ class MockExamActivity : AppCompatActivity() {
             finishExam()
         }
 
-        findViewById<TextView>(R.id.btnNextQuestion).setOnClickListener {
+        btnNextQuestion.setOnClickListener {
             saveCurrentAnswer()
             goToNextQuestion()
         }
@@ -154,8 +160,10 @@ class MockExamActivity : AppCompatActivity() {
 
     private fun showQuestion(index: Int) {
         val q = questions[index]
-        tvQuestionNumber.text = "QUESTION ${index + 1}"
-        tvProgressCount.text = "${index + 1} of ${questions.size}"
+        tvQuestionNumber.text = "Question ${index + 1}"
+        tvProgressCount.text = "of ${questions.size}"
+        laneExam.setProgress(index + 1, questions.size, "Question")
+        btnNextQuestion.text = if (index == questions.size - 1) "Finish exam" else "Next question"
         tvQuestionText.text = q.text
         optionA.text = "A.  ${q.optionA}"
         optionB.text = "B.  ${q.optionB}"

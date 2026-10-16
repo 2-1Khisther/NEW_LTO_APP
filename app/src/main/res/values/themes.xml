@@ -1,8 +1,45 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.NEW_LTO_APP" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!-- Base application theme. Colors and type come from colors.xml / type.xml. -->
+    <style name="Base.Theme.NEW_LTO_APP" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/navy_900</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/navy_700</item>
+        <item name="colorOnPrimaryContainer">@color/white</item>
+        <item name="colorSecondary">@color/olive_400</item>
+        <item name="colorOnSecondary">@color/navy_900</item>
+        <item name="colorSecondaryContainer">@color/olive_400</item>
+        <item name="colorOnSecondaryContainer">@color/navy_900</item>
+        <item name="colorSurface">@color/cream_50</item>
+        <item name="colorOnSurface">@color/ink</item>
+        <item name="colorOnSurfaceVariant">@color/ink_muted</item>
+        <item name="colorOutline">@color/cream_200</item>
+        <item name="colorError">@color/stop_red</item>
+        <item name="android:colorBackground">@color/navy_900</item>
+        <item name="android:windowBackground">@color/navy_900</item>
+
+        <!-- Gradient runs behind the status bar; icons stay light on navy -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- One family everywhere, via text appearances (see type.xml for why
+             fontFamily is not set on the theme itself) -->
+        <item name="android:textAppearanceSmall">@style/TextAppearance.Lto.Default</item>
+        <item name="android:textAppearance">@style/TextAppearance.Lto.Default</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Lto.Body</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Lto.Default</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.Lto.Caption</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.Lto.Button</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.Lto.Label</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Lto.Heading</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.Lto.Title</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.Lto.Title</item>
+
+        <!-- Components -->
+        <item name="materialButtonStyle">@style/Widget.Lto.Button.Primary</item>
+        <item name="materialCardViewStyle">@style/Widget.Lto.Card.Hero</item>
+        <item name="textInputStyle">@style/Widget.Lto.TextInput</item>
+        <item name="bottomNavigationStyle">@style/Widget.Lto.BottomNav</item>
+        <item name="circularProgressIndicatorStyle">@style/Widget.Lto.ProgressRing</item>
     </style>
 
     <style name="Theme.NEW_LTO_APP" parent="Base.Theme.NEW_LTO_APP" />

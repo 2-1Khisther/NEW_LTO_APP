@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="navy_top">#0B2A55</color>
-    <color name="navy_mid">#0F3A66</color>
-    <color name="olive_bottom">#CDC21B</color>
-    <color name="cream">#F6ECDD</color>
-    <color name="blue_accent">#2F80ED</color>
-    <color name="orange_accent">#F5A623</color>
-    <color name="track_grey">#D9D9D9</color>
-    <color name="text_dark">#1B1B1B</color>
+    <!-- Role tokens. Use these in new layouts. -->
+    <color name="navy_900">#0B2A55</color>     <!-- gradient top, headings on cream -->
+    <color name="navy_700">#0F3A66</color>     <!-- gradient middle, answer options -->
+    <color name="olive_400">#CDC21B</color>    <!-- gradient end, the "next action" -->
+    <color name="cream_50">#F6ECDD</color>     <!-- card surface -->
+    <color name="cream_200">#E8DCC8</color>    <!-- inputs, dividers, progress tracks -->
+    <color name="ink">#14213D</color>          <!-- body text on cream -->
+    <color name="ink_muted">#4A5670</color>    <!-- secondary text on cream -->
+    <color name="go_green">#2E7D32</color>     <!-- correct / passed only -->
+    <color name="stop_red">#C0392B</color>     <!-- wrong / failed only -->
     <color name="white">#FFFFFF</color>
+    <color name="on_navy_muted">#C9D3E3</color> <!-- secondary text on the gradient -->
+
+    <!-- Legacy names, kept so screens not yet migrated still build.
+         Remove once nothing references them. -->
+    <color name="navy_top">@color/navy_900</color>
+    <color name="navy_mid">@color/navy_700</color>
+    <color name="olive_bottom">@color/olive_400</color>
+    <color name="cream">@color/cream_50</color>
+    <color name="blue_accent">@color/navy_900</color>
+    <color name="orange_accent">@color/olive_400</color>
+    <color name="track_grey">@color/cream_200</color>
+    <color name="text_dark">@color/ink</color>
 </resources>

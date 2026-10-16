@@ -48,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:fontFamily="serif"
                 android:text="CREATE ACCOUNT"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -59,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="2dp"
-                android:fontFamily="serif"
                 android:text="Track your progress and sync your streak"
                 android:textColor="@color/white"
                 android:textSize="9sp" />
@@ -126,7 +124,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="serif"
                     android:text="Already have an account? "
                     android:textColor="@color/white"
                     android:textSize="9sp" />
@@ -135,7 +132,6 @@
                     android:id="@+id/tvGoToLogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="serif"
                     android:text="Login"
                     android:textColor="@color/white"
                     android:textSize="9sp"

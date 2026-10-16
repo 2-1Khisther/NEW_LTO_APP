@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LaneProgressView">
+        <attr name="laneTrackColor" format="color" />
+        <attr name="laneDashColor" format="color" />
+    </declare-styleable>
+</resources>

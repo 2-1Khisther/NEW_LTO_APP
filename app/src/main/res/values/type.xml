@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Type scale. One family (Overpass); weight carries hierarchy.
+     Each weighted style points at its exact font file. Do not set fontFamily on the
+     theme: it outranks textAppearance and flattens every weight to regular. -->
+<resources>
+    <style name="TextAppearance.Lto" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">@font/overpass</item>
+        <item name="fontFamily">@font/overpass</item>
+        <item name="android:textColor">@color/ink</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextAppearance.Lto.Display">
+        <item name="android:fontFamily">@font/overpass_extrabold</item>
+        <item name="fontFamily">@font/overpass_extrabold</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="TextAppearance.Lto.Title">
+        <item name="android:fontFamily">@font/overpass_extrabold</item>
+        <item name="fontFamily">@font/overpass_extrabold</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="TextAppearance.Lto.Heading">
+        <item name="android:fontFamily">@font/overpass_semibold</item>
+        <item name="fontFamily">@font/overpass_semibold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:lineSpacingExtra">3sp</item>
+    </style>
+
+    <style name="TextAppearance.Lto.Body">
+        <item name="android:textSize">16sp</item>
+        <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
+    <style name="TextAppearance.Lto.Label">
+        <item name="android:fontFamily">@font/overpass_semibold</item>
+        <item name="fontFamily">@font/overpass_semibold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Default for TextViews with no textAppearance (other screens) -->
+    <style name="TextAppearance.Lto.Default">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Lto.Caption">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/ink_muted</item>
+    </style>
+
+    <style name="TextAppearance.Lto.Button">
+        <item name="android:fontFamily">@font/overpass_bold</item>
+        <item name="fontFamily">@font/overpass_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <!-- Same scale, for text sitting directly on the navy gradient -->
+    <style name="TextAppearance.Lto.Title.OnNavy">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="TextAppearance.Lto.Body.OnNavy">
+        <item name="android:textColor">@color/on_navy_muted</item>
+    </style>
+    <style name="TextAppearance.Lto.Label.OnNavy">
+        <item name="android:textColor">@color/white</item>
+    </style>
+</resources>
