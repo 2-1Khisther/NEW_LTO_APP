@@ -116,6 +116,4 @@ This application is developed as an undergraduate thesis/capstone project. Devel
 
 ---
 
-## 📄 License
 
-*(Add your preferred license here — e.g. MIT, or leave as "All rights reserved" if this is submitted as academic coursework.)*
